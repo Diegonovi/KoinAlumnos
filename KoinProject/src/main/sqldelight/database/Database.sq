@@ -1,0 +1,30 @@
+CREATE TABLE Alumnos (
+    id integer PRIMARY KEY NOT NULL,
+    name text NOT NULL,
+    calificacion integer,
+    isdeleted integer DEFAULT 0
+);
+
+getAlumno:
+SELECT * FROM Alumnos WHERE id = ?;
+
+existsAlumno:
+SELECT COUNT(*) > 0 AS es_mayor_cero FROM Alumnos WHERE id = ?;
+
+getLargestId:
+SELECT id FROM Alumnos ORDER BY id LIMIT 1;
+
+createAlumno:
+INSERT INTO Alumnos (id, name, calificacion) VALUES (?,?,?);
+
+deleteAlumnoPhysically:
+DELETE FROM Alumnos WHERE id = ?;
+
+deleteAlumnoLogically:
+UPDATE Alumnos SET isdeleted = 1 WHERE id = ?;
+
+updateAlumno:
+UPDATE Alumnos SET name= ?, calificacion= ? WHERE id = ?;
+
+deleteAlumnos:
+DELETE FROM Alumnos;
