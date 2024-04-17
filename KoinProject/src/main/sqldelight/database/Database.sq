@@ -28,3 +28,6 @@ UPDATE Alumnos SET name= ?, calificacion= ? WHERE id = ?;
 
 deleteAlumnos:
 DELETE FROM Alumnos;
+
+getEveryone:
+SELECT * FROM Alumnos WHERE isdeleted = 0;

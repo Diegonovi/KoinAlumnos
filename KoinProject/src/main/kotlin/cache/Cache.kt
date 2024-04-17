@@ -15,16 +15,23 @@ class Cache (
     var cache : MutableMap<Int,Alumno> = emptyMap<Int, Alumno>().toMutableMap()
 
     fun add(alumno: Alumno) : Result<Alumno,AlumnoError>{
-        if (cache.size >= config.cacheSize && cache[alumno.id] != null){
-            log.debug { "Borrando el alumno con id ${alumno.id} de la cache" }
-            cache.remove(cache.keys.first())
+        if (cache[alumno.id] != null){
+            if (cache.size >= config.cacheSize){
+                log.debug { "Borrando el alumno con id ${alumno.id} de la cache" }
+                cache.remove(cache.keys.first())
+            }
             cache[alumno.id] = alumno
             log.debug { "Se ha añadido el alumno ${alumno.nombre} a la cache" }
-        }
+            return Ok(alumno)
+        }else return Err(AlumnoError.AlumnoYaExiste("El alumno con id ${alumno.id} ya existe en la cache"))
     }
 
     fun delete(alumno: Alumno) : Result<Alumno,AlumnoError>{
-        TODO()
+        if (cache[alumno.id] != null){
+            cache.remove(alumno.id)
+            return Ok(alumno)
+        }
+        else return Err(AlumnoError.AlumnoNoEncontrado("No se pudo encontrar el alumno con id ${alumno.id} en la cache"))
     }
 
     fun clear(){
@@ -32,6 +39,7 @@ class Cache (
     }
 
     fun get(id : Int) : Result<Alumno,AlumnoError> {
-        return
+        if (cache[id] != null) return Ok(cache[id]!!)
+        else return Err(AlumnoError.AlumnoNoEncontrado("No se pudo encontrar el alumno con id ${id} en la cache"))
     }
 }

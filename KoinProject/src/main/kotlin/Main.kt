@@ -1,5 +1,6 @@
 package org.example
 
+import org.example.modules.module
 import org.koin.core.context.startKoin
 import org.koin.fileProperties
 
@@ -8,6 +9,6 @@ import org.koin.fileProperties
 fun main() {
     startKoin{
         fileProperties("/config.properties")
-        modules()
+        modules(module)
     }
 }

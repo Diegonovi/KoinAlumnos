@@ -7,8 +7,4 @@ class Config {
         private set
     var cacheSize : Int = -1
         private set
-
-    init {
-
-    }
 }
